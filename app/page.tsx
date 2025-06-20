@@ -1,102 +1,77 @@
 import Image from "next/image";
+import Link from "next/link";
+
+const RTB_COLORS = {
+  primary: "rgb(109, 170, 226)", // Example RTB blue-green
+  accent: "#F9B233", // Example RTB yellow
+};
 
 export default function Home() {
+  const currentYear = new Date().getFullYear();
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(135deg, #eaf3fa 0%, #f8fafc 100%)' }}>
+      {/* Navbar */}
+      <nav
+        className="w-full flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 shadow-sm gap-2 sm:gap-0"
+        style={{ background: RTB_COLORS.primary }}
+      >
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+          <Image src="/rtb-logo.png" alt="RTB Logo" width={36} height={36} />
+          <span className="text-white text-lg sm:text-xl font-bold text-center">
+            Rwanda TVET Board Devices Management System
+          </span>
         </div>
+        <div className="flex items-center w-full sm:w-auto justify-center sm:justify-end mt-2 sm:mt-0">
+          <Link href="/" className="text-white text-base font-semibold hover:underline px-2">
+            Home
+          </Link>
+          <Link
+            href="/login"
+            className="ml-2 sm:ml-4 px-4 py-2 rounded-full font-bold text-base"
+            style={{ background: RTB_COLORS.accent, color: RTB_COLORS.primary }}
+          >
+            Login
+          </Link>
+        </div>
+      </nav>
+
+      {/* Main Sections */}
+      <main className="flex-1 flex flex-col items-center justify-center px-2 sm:px-4 py-6 sm:py-8 gap-6 sm:gap-10">
+        {/* Section 1: Welcome & Purpose */}
+        <section className="w-full max-w-lg sm:max-w-3xl text-center mb-3 bg-white/95 rounded-2xl shadow-lg p-4 sm:p-8 border border-gray-100">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 text-[var(--rtb-primary,rgb(16,69,119))]">
+            Welcome to the Rwanda TVET Board Devices Management System
+          </h1>
+          <p className="text-base sm:text-lg text-gray-800 font-medium mb-2">
+            This platform is designed to help schools efficiently manage, track, and report on all devices owned by the institution.
+          </p>
+          <p className="text-sm sm:text-base text-gray-700 font-normal">
+            Our goal is to ensure transparency, accountability, and optimal utilization of educational resources across all TVET schools in Rwanda.
+          </p>
+        </section>
+
+        {/* Section 2: About RTB */}
+        <section className="w-full max-w-lg sm:max-w-3xl text-center mb-3 bg-gray-50 rounded-2xl shadow-lg p-4 sm:p-8 border border-gray-100">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3 text-[var(--rtb-primary,rgb(16,69,119))]">About Rwanda TVET Board (RTB)</h2>
+          <p className="text-sm sm:text-base text-gray-800 font-normal">
+            The Rwanda TVET Board (RTB) is a government institution responsible for promoting and coordinating Technical and Vocational Education and Training (TVET) in Rwanda. RTB aims to equip Rwandans with practical skills and knowledge to meet the demands of the labor market and foster national development.
+          </p>
+        </section>
+
+        {/* Section 3: Contacts */}
+        <section className="w-full max-w-lg sm:max-w-3xl text-center bg-gray-100 rounded-2xl shadow-lg p-4 sm:p-8 border border-gray-100">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-2 sm:mb-3 text-[var(--rtb-primary,rgb(16,69,119))]">Contact Us</h2>
+          <p className="text-sm sm:text-base text-gray-800 font-medium mb-1">Rwanda TVET Board Headquarters</p>
+          <p className="text-sm sm:text-base text-gray-800 font-medium mb-1">Kigali, Rwanda</p>
+          <p className="text-sm sm:text-base text-gray-800 font-medium mb-1">Phone: +250 788 888 888</p>
+          <p className="text-sm sm:text-base text-gray-800 font-medium mb-1">Email: info@rtb.gov.rw</p>
+          <p className="text-sm sm:text-base text-gray-800 font-medium">Website: <a href="https://rtb.gov.rw" className="text-blue-700 underline font-semibold" target="_blank" rel="noopener noreferrer">rtb.gov.rw</a></p>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      {/* Footer */}
+      <footer className="w-full py-4 text-center text-sm text-gray-500 border-t bg-gray-50">
+        &copy; {currentYear} Rwanda TVET Board (RTB). All rights reserved.
       </footer>
     </div>
   );
