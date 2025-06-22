@@ -12,7 +12,7 @@ export default function VerifyTokenPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-  const backendUrl = process.env.BACKEND_URL || "http://localhost:8080/api";
+  const backendUrl = process.env.BACKEND_URL;
 
   useEffect(() => {
     // Get email from localStorage (set by login page)
