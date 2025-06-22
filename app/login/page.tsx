@@ -12,7 +12,7 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const backendUrl =process.env.BACKEND_URL;
+  const backendUrl =process.env.NEXT_PUBLIC_BACKEND_URL;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
