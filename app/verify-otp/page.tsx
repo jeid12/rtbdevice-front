@@ -40,8 +40,12 @@ export default function VerifyTokenPage() {
         localStorage.removeItem("pendingEmail");
       }
       router.replace("/dashboard");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
