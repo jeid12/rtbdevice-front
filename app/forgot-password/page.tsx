@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ForgotPasswordPage() {
   const [step, setStep] = useState<"email" | "otp" | "reset" | "done">("email");
@@ -13,7 +13,12 @@ export default function ForgotPasswordPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const [mounted, setMounted] = useState(false);
+  const backendUrl = typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_BACKEND_URL : '';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Step 1: Send email
   const handleSendEmail = async (e: React.FormEvent) => {
@@ -105,8 +110,17 @@ export default function ForgotPasswordPage() {
     }
   };
 
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rtb-primary"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#eaf3fa] to-[#f8fafc] p-2 sm:p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-slate-50 p-2 sm:p-4">
       <Card className="w-full max-w-xs sm:max-w-md shadow-xl">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-2xl font-bold text-blue-900">Forgot Password</CardTitle>

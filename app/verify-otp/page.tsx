@@ -11,15 +11,19 @@ export default function VerifyTokenPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const backendUrl = typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_BACKEND_URL : '';
 
   useEffect(() => {
+    setMounted(true);
     // Get email from localStorage (set by login page)
-    const pendingEmail = localStorage.getItem("pendingEmail") || "";
-    setEmail(pendingEmail);
-    if (!pendingEmail) {
-      router.replace("/login");
+    if (typeof window !== 'undefined') {
+      const pendingEmail = localStorage.getItem("pendingEmail") || "";
+      setEmail(pendingEmail);
+      if (!pendingEmail) {
+        router.replace("/login");
+      }
     }
   }, [router]);
 
@@ -51,8 +55,17 @@ export default function VerifyTokenPage() {
     }
   };
 
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rtb-primary"></div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#eaf3fa] to-[#f8fafc] p-2 sm:p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-slate-50 p-2 sm:p-4">
       <Card className="w-full max-w-xs sm:max-w-md shadow-xl">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-2xl font-bold text-blue-900">Verify OTP</CardTitle>
