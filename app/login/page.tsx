@@ -20,7 +20,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [mounted, setMounted] = useState(false);
   
-  const { login, isAuthenticated } = useAuth();
+  const {  isAuthenticated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
