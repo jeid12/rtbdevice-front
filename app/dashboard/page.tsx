@@ -274,7 +274,11 @@ export default function DashboardPage() {
             />
             <StatsCard
               title="Maintenance Required"
-              value={stats?.devicesByStatus?.find(s => s.status === 'maintenance')?.count?.toString() || '0'}
+              value={
+                Array.isArray(stats?.devicesByStatus)
+                  ? (stats.devicesByStatus.find(s => s.status === 'maintenance')?.count?.toString() || '0')
+                  : 'Not found'
+              }
               description="Devices requiring attention"
               icon={() => <span className="text-lg">⚠️</span>}
               trend={{ value: 15, label: "vs last week", isPositive: false }}
@@ -296,7 +300,7 @@ export default function DashboardPage() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {recentDevices.length > 0 ? recentDevices.map((device) => (
+                  {Array.isArray(recentDevices) && recentDevices.length > 0 ? recentDevices.map((device) => (
                     <div key={device.id} className="flex items-center justify-between p-3 rounded-lg bg-white border border-slate-200">
                       <div className="flex items-center space-x-3">
                         <div className="text-lg">💻</div>

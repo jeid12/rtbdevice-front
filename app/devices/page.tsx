@@ -250,13 +250,13 @@ export default function DevicesPage() {
                     <p>{error}</p>
                     <Button onClick={fetchDevices} className="mt-4">Retry</Button>
                   </div>
-                ) : devices.length === 0 ? (
+                ) : Array.isArray(devices) && devices.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <p>No devices found</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {devices.map((device) => (
+                    {Array.isArray(devices) && devices.map((device) => (
                       <div 
                         key={device.id} 
                         className="flex items-center justify-between p-4 rounded-lg bg-white border border-slate-200 hover:shadow-md transition-shadow"

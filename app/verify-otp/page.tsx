@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function VerifyTokenPage() {
   const [otp, setOtp] = useState("");
@@ -13,17 +14,17 @@ export default function VerifyTokenPage() {
   const [error, setError] = useState("");
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const backendUrl = typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_BACKEND_URL : '';
+  const { login } = useAuth();
+
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080/api';
 
   useEffect(() => {
     setMounted(true);
     // Get email from localStorage (set by login page)
-    if (typeof window !== 'undefined') {
-      const pendingEmail = localStorage.getItem("pendingEmail") || "";
-      setEmail(pendingEmail);
-      if (!pendingEmail) {
-        router.replace("/login");
-      }
+    const pendingEmail = localStorage.getItem("pendingEmail") || "";
+    setEmail(pendingEmail);
+    if (!pendingEmail) {
+      router.replace("/login");
     }
   }, [router]);
 
@@ -31,20 +32,31 @@ export default function VerifyTokenPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
+    
     try {
       const res = await fetch(`${backendUrl}/users/verify-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp }),
       });
+      
       const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "OTP verification failed");
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        localStorage.removeItem("pendingEmail");
+      
+      if (!res.ok) {
+        throw new Error(data.error || data.message || "OTP verification failed");
       }
-      router.replace("/dashboard");
+      
+      // Check if we got both token and user data
+      if (data.token && data.user) {
+        // Use the auth context to properly set authentication state
+        login(data.token, data.user);
+        localStorage.removeItem("pendingEmail");
+        router.replace("/dashboard");
+      } else {
+        throw new Error("Invalid response from server");
+      }
     } catch (err: unknown) {
+      console.error('OTP verification error:', err);
       if (err instanceof Error) {
         setError(err.message);
       } else {

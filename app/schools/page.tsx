@@ -234,13 +234,13 @@ export default function SchoolsPage() {
                     <p>{error}</p>
                     <Button onClick={() => window.location.reload()} className="mt-4">Retry</Button>
                   </div>
-                ) : schools.length === 0 ? (
+                ) : Array.isArray(schools) && schools.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <p>No schools found</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {schools.map((school) => (
+                    {Array.isArray(schools) && schools.map((school) => (
                       <div 
                         key={school.id} 
                         className="flex items-center justify-between p-4 rounded-lg bg-white border border-slate-200 hover:shadow-md transition-shadow"

@@ -230,13 +230,13 @@ export default function UsersPage() {
                     <p>{error}</p>
                     <Button onClick={() => window.location.reload()} className="mt-4">Retry</Button>
                   </div>
-                ) : users.length === 0 ? (
+                ) : Array.isArray(users) && users.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <p>No users found</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    {users.map((user) => (
+                    {Array.isArray(users) && users.map((user) => (
                       <div 
                         key={user.id} 
                         className="flex items-center justify-between p-4 rounded-lg bg-white border border-slate-200 hover:shadow-md transition-shadow"
