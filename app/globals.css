@@ -2,7 +2,7 @@
 
 :root {
   /* RTB Brand Colors with High Contrast */
-  --background: 245 145 245; /* White smoke background #F5F5a5 */
+  --background: rgb(50, 159, 226);
   --foreground: 15 23 42; /* Dark slate for text */
   --card: 255 255 255;
   --card-foreground: 15 23 42;
@@ -24,7 +24,7 @@
   --radius: 0.75rem;
   
   /* Dashboard specific colors */
-  --dashboard-background: 240 248 255; /* White blue #F0F8FF */
+  --dashboard-background: rgb(50, 159, 226);
   --dashboard-foreground: 0 0 0; /* Pure black for visibility */
   --dashboard-card: 255 255 255; /* Pure white for cards */
   --dashboard-card-foreground: 0 0 0; /* Black text for cards */

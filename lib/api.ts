@@ -19,18 +19,20 @@ export interface User {
 export interface Device {
   id: number;
   serialNumber: string;
-  name: string;
+  name_tag: string;
   model: string;
   brand: string;
-  category: string;
-  status: 'active' | 'inactive' | 'maintenance' | 'disposed';
-  condition: 'excellent' | 'good' | 'fair' | 'poor';
+  category: 'laptop' | 'desktop' | 'projector' | 'other';
+  status: 'active' | 'inactive' | 'maintenance' | 'damaged' | 'lost' | 'disposed';
+  condition: 'excellent' | 'good' | 'fair' | 'poor' | 'broken';
   purchaseDate?: string;
-  warrantyExpiration?: string;
+  purchaseCost?: number;
+  warrantyExpiry?: string;
   schoolId?: number;
   assignedUserId?: number;
   location?: string;
   notes?: string;
+  lastSeenAt?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -39,7 +41,7 @@ export interface School {
   id: number;
   name: string;
   code: string;
-  type: 'public' | 'private' | 'government';
+  type: 'primary' | 'secondary' | 'tvet' | 'university' | 'other';
   address: string;
   phone?: string;
   email?: string;
@@ -48,7 +50,7 @@ export interface School {
   principalEmail?: string;
   district: string;
   sector: string;
-  status: 'active' | 'inactive' | 'suspended';
+  status: 'active' | 'inactive' | 'suspended' | 'pending';
   createdAt: string;
   updatedAt: string;
 }
