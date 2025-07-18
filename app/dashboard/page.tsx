@@ -239,10 +239,10 @@ export default function DashboardPage() {
               </div>
               <div className="hidden md:block">
                 <Image
-                  src="/rtb-logo.png"
+                  src="/logortb.jpg"
                   alt="RTB Logo"
-                  width={80}
-                  height={80}
+                  width={120}
+                  height={120}
                   className="rounded-lg bg-white/80 p-2 shadow-sm"
                 />
               </div>
@@ -339,7 +339,7 @@ export default function DashboardPage() {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span className="text-rtb-primary">System Alerts</span>
+                  <span className="text-blue-600">System Alerts</span>
                   <Badge variant="destructive" className="text-xs">{alerts.length} Active</Badge>
                 </CardTitle>
                 <CardDescription>
@@ -371,7 +371,7 @@ export default function DashboardPage() {
                 </div>
                 <div className="mt-4">
                   <Link href="/alerts">
-                    <Button variant="rtb-outline" className="w-full">
+                    <Button  variant="outline" className="w-full border-blue-600 text-blue-600 hover:bg-blue-50">
                       View All Alerts
                     </Button>
                   </Link>

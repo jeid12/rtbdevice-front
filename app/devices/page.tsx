@@ -35,36 +35,6 @@ export default function DevicesPage() {
     search: '',
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await apiService.getDevices({
-          page: currentPage,
-          limit: 10,
-          ...(filters.status && { status: filters.status }),
-          ...(filters.condition && { condition: filters.condition }),
-          ...(filters.search && { search: filters.search }),
-        });
-
-        if (response.success && response.data) {
-          setDevices(response.data.devices);
-          setTotalPages(response.data.pages);
-          setTotal(response.data.total);
-        } else {
-          setError(response.error || 'Failed to fetch devices');
-        }
-      } catch (err) {
-        console.error('Error fetching devices:', err);
-        setError('Failed to fetch devices');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [currentPage, filters]);
-
   const fetchDevices = async () => {
     try {
       setLoading(true);
@@ -91,6 +61,10 @@ export default function DevicesPage() {
     }
   };
 
+  useEffect(() => {
+    fetchDevices();
+  }, [currentPage, filters]);
+
   const getStatusBadgeVariant = (status: string) => {
     switch (status) {
       case 'active':
@@ -100,7 +74,6 @@ export default function DevicesPage() {
       case 'inactive':
         return 'secondary';
       case 'damaged':
-        return 'destructive';
       case 'lost':
         return 'destructive';
       case 'disposed':
@@ -119,7 +92,6 @@ export default function DevicesPage() {
       case 'fair':
         return 'outline';
       case 'poor':
-        return 'destructive';
       case 'broken':
         return 'destructive';
       default:
@@ -136,21 +108,7 @@ export default function DevicesPage() {
     <DashboardHeader
       title="Device Management"
       description="Manage and monitor TVET devices across all institutions"
-    >
-      <div className="flex items-center space-x-4">
-        <Button variant="rtb-outline" size="sm">
-          Export List
-        </Button>
-        <Button variant="rtb-outline" size="sm">
-          Bulk Import
-        </Button>
-        <Link href="/devices/add">
-          <Button variant="rtb" size="sm">
-            Add Device
-          </Button>
-        </Link>
-      </div>
-    </DashboardHeader>
+    />
   );
 
   const sidebar = <Sidebar items={sidebarItems} />;
@@ -161,8 +119,8 @@ export default function DevicesPage() {
         <DashboardLayout header={header} sidebar={sidebar}>
           <div className="space-y-6">
             
-            {/* Filters */}
-            <Card>
+            {/* Filters Card with blue border */}
+            <Card className="border border-blue-500">
               <CardHeader>
                 <CardTitle className="text-rtb-primary">Filters</CardTitle>
               </CardHeader>
@@ -224,11 +182,18 @@ export default function DevicesPage() {
                     </Button>
                   </div>
                 </div>
+
+                {/* Add Device button below filters */}
+                <div className="mt-6 flex justify-end">
+                 <Link href="/devices/add">
+                  <Button variant="rtb" size="sm">Add Device</Button>
+                 </Link>
+                </div>
               </CardContent>
             </Card>
 
-            {/* Devices List */}
-            <Card>
+            {/* Devices List Card with blue border */}
+            <Card className="border border-blue-500">
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="text-rtb-primary">Devices ({total})</span>

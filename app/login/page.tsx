@@ -10,6 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
+
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -22,6 +24,7 @@ export default function LoginPage() {
   
   const {  isAuthenticated } = useAuth();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -31,7 +34,7 @@ export default function LoginPage() {
     }
   }, [isAuthenticated, router]);
 
-  const backendUrl = typeof window !== 'undefined' ? process.env.NEXT_PUBLIC_BACKEND_URL : '';
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL!;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +90,7 @@ export default function LoginPage() {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-4 mb-6">
               <Image
-                src="/rtb-logo.png"
+                src="/logortb.jpg"
                 alt="Rwanda TVET Board"
                 width={60}
                 height={60}
@@ -183,29 +186,43 @@ export default function LoginPage() {
                   />
                 </div>
                 
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="password" className="text-rtb-primary font-medium">
-                      Password
-                    </Label>
-                    <Link 
-                      href="/forgot-password" 
-                      className="text-sm text-rtb-secondary hover:text-rtb-secondary/80 transition-colors"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
-                  <Input
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    required
-                    className="h-11 border-rtb-primary/20 focus:border-rtb-primary focus:ring-rtb-primary/20"
-                  />
-                </div>
+                <div className="space-y-1">
+  <Label htmlFor="password" className="text-rtb-primary font-medium">
+    Password
+  </Label>
+
+  <div className="relative">
+    <Input
+      id="password"
+      name="password"
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter your password"
+      value={formData.password}
+      onChange={handleInputChange}
+      required
+      autoComplete="current-password"
+      className="h-11 pr-12 border-rtb-primary/20 focus:border-rtb-primary focus:ring-rtb-primary/20"
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(prev => !prev)}
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-rtb-primary focus:outline-none"
+      aria-label="Toggle password visibility"
+    >
+      {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+    </button>
+  </div>
+
+  <div className="mt-1 text-right">
+    <Link
+      href="/forgot-password"
+      className="text-sm text-rtb-secondary hover:text-rtb-secondary/80 transition-colors"
+    >
+      Forgot password?
+    </Link>
+  </div>
+</div>
+
                 
                 <Button
                   type="submit"
